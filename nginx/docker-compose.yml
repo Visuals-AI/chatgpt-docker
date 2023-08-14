@@ -17,7 +17,6 @@ services:
       - NGINX_DOMAIN=${DOMAIN}
       - TRUSTED_VPC_IP=${TRUSTED_VPC_IP}
     volumes:
-      - ./bin/_modules.yml:/var/tmp/.modules.yml
       - ./volumes/nginx/etc:/tmp/nginx/etc
       - ./volumes/nginx/cert:/etc/nginx/cert
       - ./volumes/nginx/html:/usr/share/nginx/html
