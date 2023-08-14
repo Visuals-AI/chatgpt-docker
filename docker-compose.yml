@@ -51,6 +51,7 @@ services:
     volumes:
       - ./nginx/etc:/tmp/nginx/etc
       - ./nginx/cert:/etc/nginx/cert
+      - ./nginx/html/common:/usr/share/nginx/html/common
       - ./nginx/html/5xx.html:/usr/share/nginx/html/5xx.html
       - ./.basicauth:/etc/nginx/passdb/.basicauth
       - ./logs/nginx:/var/log/nginx
