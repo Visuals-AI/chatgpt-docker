@@ -1,0 +1,62 @@
+version: '2'
+services:
+  vul-nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+      args:
+        VUL_DIR: nginx
+    container_name: vul-nginx
+    hostname: centos
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=zh_CN.UTF-8
+      - LANGUAGE=zh_CN.UTF-8
+      - LC_ALL=zh_CN.UTF-8
+      - PROTOCOL=${PROTOCOL}
+      - NGINX_DOMAIN=${DOMAIN}
+      - TRUSTED_VPC_IP=${TRUSTED_VPC_IP}
+    volumes:
+      - ./bin/_modules.yml:/var/tmp/.modules.yml
+      - ./volumes/nginx/etc:/tmp/nginx/etc
+      - ./volumes/nginx/cert:/etc/nginx/cert
+      - ./volumes/nginx/html:/usr/share/nginx/html
+      - ./logs/nginx:/var/log/nginx
+    ports:
+      # HTTP 协议，只能暴露在测试环境
+      - 80:80
+      # HTTPS 协议，需要挂载有效的 HTTPS 证书
+      - 443:443
+    networks:
+      vul-00:
+        ipv4_address: 172.168.100.254
+      vul-01:
+        ipv4_address: 172.168.1.254
+      vul-02:
+        ipv4_address: 172.168.2.254
+      vul-03:
+        ipv4_address: 172.168.3.254
+      vul-04:
+        ipv4_address: 172.168.4.254
+    extra_hosts:
+      - "${DOMAIN}:${INTER_IP}"
+    restart: on-failure
+
+
+networks:
+  vul-00:
+    external: 
+      name: vulhub_vul-00
+  vul-01:
+    external: 
+      name: vulhub_vul-01
+  vul-02:
+    external: 
+      name: vulhub_vul-02
+  vul-03:
+    external: 
+      name: vulhub_vul-03
+  vul-04:
+    external: 
+      name: vulhub_vul-04
+
