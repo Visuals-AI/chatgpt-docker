@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web-chatgpt:
-    image: chenzhaoyu94/chatgpt-web:latest # 总是使用 latest ,更新时重新 pull 该 tag 镜像即可
+    image: chenzhaoyu94/chatgpt-web:latest
     # ports:
     #   - 127.0.0.1:3002:3002
     environment:
@@ -24,11 +24,11 @@ services:
       # 超时，单位毫秒，可选
       # TIMEOUT_MS: 60000
       # Socks代理，可选，和 SOCKS_PROXY_PORT 一起时生效
-      SOCKS_PROXY_HOST: host.docker.internal
+      SOCKS_PROXY_HOST: ${SOCKS_PROXY_HOST}
       # Socks代理端口，可选，和 SOCKS_PROXY_HOST 一起时生效
-      SOCKS_PROXY_PORT: 10089
+      SOCKS_PROXY_PORT: ${SOCKS_PROXY_PORT}
       # HTTPS 代理，可选，支持 http，https，socks5
-      # HTTPS_PROXY: http://host.docker.internal:10088
+      # HTTPS_PROXY: ${HTTPS_PROXY}
     networks:
       web-net:
         ipv4_address: 172.168.100.2
