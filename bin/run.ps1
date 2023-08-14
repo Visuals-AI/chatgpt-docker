@@ -20,8 +20,8 @@ param(
     [string]$p = "http",
     [string]$d = "local.chatgpt.com",
     [string]$i = "", 
-    [string]$s = "host.docker.internal", 
-    [string]$r = "0", 
+    [string]$s = "", 
+    [string]$r = "", 
     [string]$h = ""
 )
 

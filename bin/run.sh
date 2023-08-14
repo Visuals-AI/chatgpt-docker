@@ -19,8 +19,8 @@ OPENAI_MODEL="gpt-3.5-turbo"
 PROTOCOL="http"
 DOMAIN="local.chatgpt.com"
 INTER_IP=""
-SOCKS_PROXY_HOST="host.docker.internal"
-SOCKS_PROXY_PORT="0"
+SOCKS_PROXY_HOST=""
+SOCKS_PROXY_PORT=""
 HTTPS_PROXY=""
 
 
