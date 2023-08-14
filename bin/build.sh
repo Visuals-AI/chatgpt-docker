@@ -1,57 +1,49 @@
 #!/bin/bash
 # ------------------------
-# 构建子模块镜像
-# bin/build.sh --recompile
+# 构建基础镜像
+# bin/base_build.sh [-c OFF]
+#   -c 是否启用缓存构建: OFF/ON(默认)
 # ------------------------
-# 由于子模块均依赖基础镜像，需要在 base_deploy.sh 之后执行
-# ------------------------
 
-BASE_DIR=`pwd`
-VULHUB_DIR="vulhub"
-VULBASE_DIR="${VULHUB_DIR}/vul-base"
-TARGET_DIR="${VULBASE_DIR}/target"
+CACHE="ON"
 
-# jar 包的解密密码，需要和 bin/run.sh 保持一致，请勿泄露给渗透测试人员或随意变更，否则无法解密
-ENCRYPT_PASSWORD="6nMtd2sWQ6p3RMmTqyHh"
-
-
-REBUILD=$1
-if [ ! -d "${TARGET_DIR}" ]; then
-    REBUILD="--recompile"
-fi
-
-# 预编译靶场后端代码
-if [ "x${REBUILD}" = "x--recompile" ]; then
-
-    # 打包依赖工程(父工程)
-    echo "precompiled ${VULHUB_DIR} pom ..."
-    cd "${VULHUB_DIR}"
-    mvn "-Dmaven.test.skip=true" clean install -N
-    cd "${BASE_DIR}"
+set -- `getopt c: "$@"`
+while [ -n "$1" ]
+do
+  case "$1" in
+    -c) CACHE="$2"
+        shift ;;
+  esac
+  shift
+done
 
 
-    # 打包基础后端代码
-    echo "precompiled ${VULBASE_DIR} code ..."
-    cd "${VULBASE_DIR}"
-    mvn "-Dmaven.test.skip=true" clean install -P toLibJar
-    mvn "-Dmaven.test.skip=true" clean install -P toResWar
-    mvn "-Dmaven.test.skip=true" "-Dencrypt.password=${ENCRYPT_PASSWORD}" clean package -P toFatJar
-    cd "${BASE_DIR}"
+function del_image {
+  image_name=$1
+  image_id=`docker images -q --filter reference=${image_name}`
+  if [ ! -z "${image_id}" ]; then
+    echo "delete [${image_name}] ..."
+    docker image rm -f ${image_id}
+    echo "done ."
+  fi
+}
+
+function build_image {
+    image_name=$1
+    dockerfile=$2
+    del_image ${image_name}
+    if [ "x${CACHE}" = "xOFF" ]; then
+        docker build --no-cache -t ${image_name} -f ${dockerfile} .
+    else
+        docker build -t ${image_name} -f ${dockerfile} .
+    fi
+}
 
 
-    # 打包各个场景子模块
-    bin/_build_modules.sh
-fi
+echo "build image ..."
+IMAGE_NAME=`echo ${PWD##*/}`
+build_image ${IMAGE_NAME} "Dockerfile"
+docker-compose build
 
-
-echo "load sub modules info ..."
-MODULES_DOCKERFILES=`./bin/_load_modules.sh`
-
-
-echo "build sub modules image ..."
-docker-compose -f docker-compose.yml \
-${MODULES_DOCKERFILES} \
-build
-
-
+docker image ls | grep "${IMAGE_NAME}"
 echo "finish ."

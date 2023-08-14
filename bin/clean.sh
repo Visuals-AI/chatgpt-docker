@@ -7,11 +7,8 @@
 echo "clean logs ..."
 rm -rf logs
 
-echo "clean sub modules ..."
-bin/_clean_modules.sh
-
 echo "clean images ..."
-docker rmi -f $(docker images | grep "vulhub" | awk '{print $3}')
+docker rmi -f $(docker images | grep "web-music" | awk '{print $3}')
 docker rmi -f $(docker images | grep "none" | awk '{print $3}')
 
 echo "finish ."

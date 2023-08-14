@@ -5,15 +5,12 @@
 #           [-p ${PROTOCOL}]            # 页面使用 http/https 协议（默认 http）
 #           [-d ${DOMAIN}]              # 服务域名
 #           [-i ${IP}]                  # 服务器 IP（默认通过网卡取内网 IP，如果需要公网访问，需设置为公网 IP）
-#           [-s db]                     # 只启动数据库服务
 #------------------------------------------------
 
 param(
     [string]$Protocol = "http",
-    [string]$Domain = "local.chatgpt.com",
-    [string]$IP = "",
-    [string]$DB_SVC = "", 
-    [string]$TRUSTED_VPC_IP = "172.168.200.200"
+    [string]$Domain = "web.music.com",
+    [string]$IP = ""
 )
 
 
@@ -52,35 +49,24 @@ function Set-Dns {
 
 function Set-Env {
   param(
-    [string]$jarPwd, 
-    [string]$jasyptPwd, 
     [string]$Domain,
     [string]$InterIP,
-    [string]$Protocol, 
-    [string]$TrustedIP
+    [string]$Protocol
   )
 
   $env_file = ".env"
-  "CONFUSE_PWD=$JarPwd" | Out-File -Encoding utf8 -FilePath $env_file
-  "JASYPT_PWD=${jasypt_pwd}" | Out-File -Encoding utf8 -Append -FilePath $env_file
-  "DOMAIN=$Domain" | Out-File -Encoding utf8 -Append -FilePath $env_file
+  "DOMAIN=$Domain" | Out-File -Encoding utf8 -FilePath $env_file
   "INTER_IP=$InterIP" | Out-File -Encoding utf8 -Append -FilePath $env_file
   "PROTOCOL=$Protocol" | Out-File -Encoding utf8 -Append -FilePath $env_file
-  "TRUSTED_VPC_IP=${TrustedIP}" | Out-File -Encoding utf8 -Append -FilePath $env_file
   Write-Host "$InterIP $Domain"
 }
 
 Set-Dns -Domain $Domain -InterIP $IP
-Set-Env -JarPwd $DECRYPT_PASSWORD -jasyptPwd $JASYPT_PWD -Domain $Domain -InterIP $IP -Protocol $Protocol -TrustedIP $TRUSTED_VPC_IP 
+Set-Env -Domain $Domain -InterIP $IP -Protocol $Protocol
 
 
-$MODULES_DOCKERFILES = & ".\bin\_load_modules.ps1"
-if ($DB_SVC -eq "db") {
-  $MODULES_DOCKERFILES = ""
-}
 
-docker-compose -f docker-compose.yml $MODULES_DOCKERFILES up -d
+docker-compose up -d
 
 docker ps
 Write-Host "Docker is running: ${Protocol}://${Domain}"
-Write-Host "(You can control the scene that needs to be started by modifying 'bin/_modules.yml')"

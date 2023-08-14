@@ -1,31 +1,31 @@
 # Powershell
 #------------------------------------------------
-# è¿›å…¥å®¹å™¨çš„äº¤äº’ç»ˆç«¯
+# ½øÈëÈİÆ÷µÄ½»»¥ÖÕ¶Ë
 # bin\terminal.ps1
 #------------------------------------------------
 
-# è·å–å®¹å™¨åˆ—è¡¨
+# »ñÈ¡ÈİÆ÷ÁĞ±í
 
 $CONTAINER_LIST = docker ps --format "{{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}"
 
 
-# æ‰“å°å®¹å™¨åˆ—è¡¨ï¼Œå¹¶å¯¹å®¹å™¨æ‰“ä¸Šç¼–å·
+# ´òÓ¡ÈİÆ÷ÁĞ±í£¬²¢¶ÔÈİÆ÷´òÉÏ±àºÅ
 
 Write-Host "Select a container to enter:"
 $CONTAINER_LIST | ForEach-Object { $_ -replace "`t", " " } | ForEach-Object { $i=0 } { ++$i; "$i. $_" }
 
 
-# è¯»å–ç”¨æˆ·é€‰æ‹©çš„å®¹å™¨ç¼–å·
+# ¶ÁÈ¡ÓÃ»§Ñ¡ÔñµÄÈİÆ÷±àºÅ
 
 $NUMBER = Read-Host "Enter a number (0 for exit):"
 
 
-# æ ¹æ®ç”¨æˆ·é€‰æ‹©çš„å®¹å™¨ç¼–å·è·å–å®¹å™¨ID
+# ¸ù¾İÓÃ»§Ñ¡ÔñµÄÈİÆ÷±àºÅ»ñÈ¡ÈİÆ÷ID
 
 $CONTAINER_ID = ($CONTAINER_LIST | Select-Object -Skip 1)[$NUMBER-1].Substring(0, 12)
 
 
-# è¿›å…¥å®¹å™¨ç»ˆç«¯
+# ½øÈëÈİÆ÷ÖÕ¶Ë
 
 if ($CONTAINER_ID) {
     docker exec -it $CONTAINER_ID /bin/bash
