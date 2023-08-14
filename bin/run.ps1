@@ -61,8 +61,9 @@ function Set-Env {
   Write-Host "$InterIP $Domain"
 }
 
-Set-Dns -Domain $Domain -InterIP $IP
-Set-Env -Domain $Domain -InterIP $IP -Protocol $Protocol
+# FIXME
+# Set-Dns -Domain $Domain -InterIP $IP
+# Set-Env -Domain $Domain -InterIP $IP -Protocol $Protocol
 
 
 

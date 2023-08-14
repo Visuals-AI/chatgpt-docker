@@ -71,9 +71,9 @@ function set_env {
   echo "PROTOCOL=${protocol}" >> ${ENV_FILE}
 }
 
-
-set_dns $DOMAIN $INTER_IP
-set_env $DOMAIN $INTER_IP $PROTOCOL
+# FIXME
+# set_dns $DOMAIN $INTER_IP
+# set_env $DOMAIN $INTER_IP $PROTOCOL
 
 docker-compose up -d
 
