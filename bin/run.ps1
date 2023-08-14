@@ -9,7 +9,7 @@
 
 param(
     [string]$Protocol = "http",
-    [string]$Domain = "web.music.com",
+    [string]$Domain = "local.chatgpt.com",
     [string]$IP = ""
 )
 

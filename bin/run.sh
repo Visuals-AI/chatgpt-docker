@@ -8,7 +8,7 @@
 #------------------------------------------------
 
 PROTOCOL="http"
-DOMAIN="web.music.com"
+DOMAIN="local.chatgpt.com"
 INTER_IP=""
 
 

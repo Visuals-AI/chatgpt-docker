@@ -1,2 +1,2 @@
 .env
-volumes/nginx/cert/*
+nginx/cert/*

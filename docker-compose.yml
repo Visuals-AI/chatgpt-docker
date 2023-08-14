@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-  chatgpt:
+  web-chatgpt:
     image: chenzhaoyu94/chatgpt-web:latest # 总是使用 latest ,更新时重新 pull 该 tag 镜像即可
-    ports:
-      - 127.0.0.1:3002:3002
+    # ports:
+    #   - 127.0.0.1:3002:3002
     environment:
       # 二选一
       OPENAI_API_KEY: ${OPENAI_API_KEY}
@@ -30,20 +30,17 @@ services:
       # HTTPS 代理，可选，支持 http，https，socks5
       # HTTPS_PROXY: http://host.docker.internal:10088
     networks:
-      gpt-net:
+      web-net:
         ipv4_address: 172.168.100.2
-    # extra_hosts:
-    #   - "${DOMAIN}:${INTER_IP}"
     restart: on-failure
 
-  nginx:
+
+  web-nginx:
     build:
       context: .
-      dockerfile: ./nginx/Dockerfile
-      args:
-        VUL_DIR: nginx
-    container_name: vul-nginx
-    hostname: centos
+      dockerfile: ./Dockerfile
+    container_name: web-nginx
+    hostname: web-nginx
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
@@ -51,35 +48,26 @@ services:
       - LC_ALL=zh_CN.UTF-8
       - PROTOCOL=${PROTOCOL}
       - NGINX_DOMAIN=${DOMAIN}
-      - TRUSTED_VPC_IP=${TRUSTED_VPC_IP}
     volumes:
-      - ./volumes/nginx/etc:/tmp/nginx/etc
-      - ./volumes/nginx/cert:/etc/nginx/cert
-      - ./volumes/nginx/html:/usr/share/nginx/html
+      - ./nginx/etc:/tmp/nginx/etc
+      - ./nginx/cert:/etc/nginx/cert
+      - ./nginx/html/5xx.html:/usr/share/nginx/html/5xx.html
       - ./logs/nginx:/var/log/nginx
     ports:
       # HTTP 协议，只能暴露在测试环境
-      - 80:80
+      - 7080:80
       # HTTPS 协议，需要挂载有效的 HTTPS 证书
-      - 443:443
+      - 7443:443
     networks:
-      vul-00:
-        ipv4_address: 172.168.100.254
-      vul-01:
-        ipv4_address: 172.168.1.254
-      vul-02:
-        ipv4_address: 172.168.2.254
-      vul-03:
-        ipv4_address: 172.168.3.254
-      vul-04:
-        ipv4_address: 172.168.4.254
+      web-net:
+        ipv4_address: 172.168.100.3
     extra_hosts:
       - "${DOMAIN}:${INTER_IP}"
     restart: on-failure
 
 
 networks:
-  gpt-net:
+  web-net:
     driver: bridge
     ipam:
       driver: default
