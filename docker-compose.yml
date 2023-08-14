@@ -2,7 +2,8 @@ version: '3'
 
 services:
   web-chatgpt:
-    image: chenzhaoyu94/chatgpt-web:latest
+    image: expm02/chatgpt-web:latest
+    # image: chenzhaoyu94/chatgpt-web:latest
     # ports:
     #   - 127.0.0.1:3002:3002
     environment:
@@ -28,7 +29,7 @@ services:
       # Socks代理端口，可选，和 SOCKS_PROXY_HOST 一起时生效
       SOCKS_PROXY_PORT: ${SOCKS_PROXY_PORT}
       # HTTPS 代理，可选，支持 http，https，socks5
-      # HTTPS_PROXY: ${HTTPS_PROXY}
+      HTTPS_PROXY: ${HTTPS_PROXY}
     networks:
       web-net:
         ipv4_address: 172.168.100.2
@@ -36,6 +37,7 @@ services:
 
 
   web-nginx:
+    # image: expm02/web-nginx:latest
     build:
       context: .
       dockerfile: ./Dockerfile
