@@ -52,6 +52,7 @@ services:
       - ./nginx/etc:/tmp/nginx/etc
       - ./nginx/cert:/etc/nginx/cert
       - ./nginx/html/5xx.html:/usr/share/nginx/html/5xx.html
+      - ./.basicauth:/etc/nginx/passdb/.basicauth
       - ./logs/nginx:/var/log/nginx
     ports:
       # HTTP 协议，只能暴露在测试环境
