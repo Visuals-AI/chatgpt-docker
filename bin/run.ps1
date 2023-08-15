@@ -15,21 +15,25 @@
 #------------------------------------------------
 
 param(
-    [string]$k = "", 
-    [string]$m = "gpt-3.5-turbo", 
-    [string]$p = "http",
+    [string]$t = "http",
     [string]$d = "local.chatgpt.com",
     [string]$i = "", 
+    [string]$u = "chatgpt", 
+    [string]$p = "TPGtahc#654321", 
+    [string]$k = "", 
+    [string]$m = "gpt-3.5-turbo", 
     [string]$s = "", 
     [string]$r = "", 
     [string]$h = ""
 )
 
-$OPENAI_API_KEY = $k
-$OPENAI_MODEL = $m
-$PROTOCOL = $p
+$PROTOCOL = $t
 $DOMAIN = $d
 $INTER_IP = $i
+$USERNAME = $u
+$PASSWORD = $p
+$OPENAI_API_KEY = $k
+$OPENAI_MODEL = $m
 $SOCKS_PROXY_HOST = $s
 $SOCKS_PROXY_PORT = $r
 $HTTPS_PROXY = $h
@@ -82,6 +86,7 @@ function Set-Env {
 }
 
 
+python3 ./py/gen_basicauth.py -u "$USERNAME" -p "$PASSWORD"
 Set-Dns -DOMAIN $DOMAIN -INTER_IP $INTER_IP
 Set-Env
 

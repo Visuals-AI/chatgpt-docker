@@ -2,9 +2,11 @@
 #------------------------------------------------
 # 运行 docker 服务（由于需要实时解析局域网 IP，需要 sudo 权限执行）
 # sudo bin/run.sh
-#           [-p ${PROTOCOL}]            # 页面使用 http/https 协议（默认 http）
+#           [-t ${PROTOCOL}]            # 页面使用 http/https 协议（默认 http）
 #           [-d ${DOMAIN}]              # 对公服务域名（浏览器访问地址）
 #           [-i ${IP}]                  # 服务器 IP（默认通过网卡取内网 IP，如果需要公网访问，需设置为公网 IP）
+#           [-u ${USERNAME}]            # ChatGPT Web 登录账户（BasicAuth）
+#           [-p ${PASSWORD}]            # ChatGPT Web 登录密码（BasicAuth）
 #           [-k ${OPENAI_API_KEY}]      # ChatGPT API key
 #           [-m ${OPENAI_MODEL}]        # ChatGPT Model: gpt-4, gpt-4-0314, gpt-4-0613, gpt-4-32k, gpt-4-32k-0314, gpt-4-32k-0613, gpt-3.5-turbo-16k, gpt-3.5-turbo-16k-0613, gpt-3.5-turbo, gpt-3.5-turbo-0301, gpt-3.5-turbo-0613, text-davinci-003, text-davinci-002, code-davinci-002
 #           [-s ${SOCKS_PROXY_HOST}]    # Socks5 代理服务，和 HTTP 二选一，格式形如 host.docker.internal
@@ -14,25 +16,31 @@
 # 注： host.docker.internal 是 docker 内访问宿主机上的服务的固定地址
 #------------------------------------------------
 
-OPENAI_API_KEY=""
-OPENAI_MODEL="gpt-3.5-turbo"
 PROTOCOL="http"
 DOMAIN="local.chatgpt.com"
 INTER_IP=""
+USERNAME="chatgpt"
+PASSWORD="TPGtahc#654321"
+OPENAI_API_KEY=""
+OPENAI_MODEL="gpt-3.5-turbo"
 SOCKS_PROXY_HOST=""
 SOCKS_PROXY_PORT=""
 HTTPS_PROXY=""
 
 
-set -- `getopt p:d:i:k:m:s:r:h: "$@"`
+set -- `getopt t:d:i:u:p:k:m:s:r:h: "$@"`
 while [ -n "$1" ]
 do
   case "$1" in
-    -u) PROTOCOL="$2"
+    -t) PROTOCOL="$2"
         shift ;;
     -d) DOMAIN="$2"
         shift ;;
     -i) INTER_IP="$2"
+        shift ;;
+    -u) USERNAME="$2"
+        shift ;;
+    -p) PASSWORD="$2"
         shift ;;
     -k) OPENAI_API_KEY="$2"
         shift ;;
@@ -95,8 +103,10 @@ function set_env {
 }
 
 
+python3 ./py/gen_basicauth.py -u "$USERNAME" -p "$PASSWORD"
 set_dns $DOMAIN $INTER_IP
 set_env
+
 
 
 docker-compose up -d
