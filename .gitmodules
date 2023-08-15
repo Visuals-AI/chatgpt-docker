@@ -1,0 +1,3 @@
+[submodule "chatgpt-web"]
+	path = chatgpt-web
+	url = git@github.com:Visuals-AI/chatgpt-web.git

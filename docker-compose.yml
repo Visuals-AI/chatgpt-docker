@@ -2,8 +2,11 @@ version: '3'
 
 services:
   web-chatgpt:
-    image: expm02/chatgpt-web:latest
+    # image: expm02/chatgpt-web:latest
     # image: chenzhaoyu94/chatgpt-web:latest
+    build:
+      context: ./chatgpt-web
+      dockerfile: ./Dockerfile
     # ports:
     #   - 127.0.0.1:3002:3002
     environment:
