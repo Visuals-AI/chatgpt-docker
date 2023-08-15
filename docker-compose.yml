@@ -3,7 +3,6 @@ version: '3'
 services:
   web-chatgpt:
     # image: expm02/chatgpt-web:latest
-    # image: chenzhaoyu94/chatgpt-web:latest
     build:
       context: ./chatgpt-web
       dockerfile: ./Dockerfile
