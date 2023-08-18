@@ -93,4 +93,4 @@ Set-Env
 
 docker-compose up -d
 docker ps
-Write-Host "Docker is running: ${PROTOCOL}://${DOMAIN}"
+Write-Host "Docker is running: ${PROTOCOL}://${DOMAIN}:7080"
