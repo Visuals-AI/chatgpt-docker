@@ -4,6 +4,12 @@
 
 ------
 
+## 运行环境
+
+![](https://img.shields.io/badge/Windows-x64-brightgreen.svg) ![](https://img.shields.io/badge/Unix-x64-red.svg) ![](https://img.shields.io/badge/Mac-x64-blue.svg)
+![](https://img.shields.io/badge/Python-3.8-yellow.svg)
+
+
 ## 概要
 
 通过 [openai](https://platform.openai.com/) 的 [API](https://platform.openai.com/account/api-keys) 调用 [ChatGPT](https://chat.openai.com/) 的能力，便于共享给家人使用：
@@ -33,11 +39,6 @@
 4. 申请一个 [openai](https://platform.openai.com/) 账户，同时绑定一张境外银行卡以激活 API 调用权限（费用自负）
 5. 生成一个 [API key](https://platform.openai.com/account/api-keys)
 
-
-## 运行环境
-
-![](https://img.shields.io/badge/Windows-x64-brightgreen.svg) ![](https://img.shields.io/badge/Unix-x64-red.svg) ![](https://img.shields.io/badge/Mac-x64-blue.svg)
-![](https://img.shields.io/badge/Python-3.8-yellow.svg)
 
 
 ## 部署步骤
