@@ -33,7 +33,7 @@
 
 ## 准备
 
-1. 部署一台 VPS 服务器（可用于直接部署 ChatGPT-Docker、亦可用于本地部署 ChatGPT-Docker 后通过科学上网使用）
+1. 部署一台 [VPS 服务器](https://github.com/EXP-Tools/trojan-docker)（可用于直接部署 ChatGPT-Docker、亦可用于本地部署后利用 VPS 代理科学上网再使用）
 2. VPS/本地安装 [docker](https://www.docker.com/)、docker-compose
 3. VPS/本地安装 [python3](https://www.python.org/downloads/)
 4. 申请一个 [openai](https://platform.openai.com/) 账户，同时绑定一张境外银行卡以激活 API 调用权限（费用自负）
