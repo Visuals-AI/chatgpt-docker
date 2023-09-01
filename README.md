@@ -53,7 +53,7 @@
 | 参数 | 示例值 | 说明 |
 |:---|:---|:---|
 | `-t ${PROTOCOL}`| https | Web 页面使用 http/https 协议 |
-| `-d ${DOMAIN}]` | local.chatgpt.com | 服务域名（浏览器访问地址），没有申请域名可不指定。亦可指定本地域名、使用 sudo （管理员权限）执行脚本会自动把本地解析写到 hosts |
+| `-d ${DOMAIN}]` | local.chatgpt.com | 服务域名（浏览器访问地址），没有申请域名时需指定为 IP。亦可指定本地域名、使用 sudo （管理员权限）执行脚本会自动把本地解析写到 hosts |
 | `-i ${IP}` | 127.0.0.1 | 域名解析到的 IP，若需要对公访问，这里需要设置为公网 IP |
 | `-k ${OPENAI_API_KEY}` | `sk-...abcd` | ChatGPT [API key](https://platform.openai.com/account/api-keys) |
 | `-m ${OPENAI_MODEL}` | gpt-3.5-turbo | ChatGPT Model，枚举值和价格请参考[官网文档](https://platform.openai.com/docs/models/overview) |
