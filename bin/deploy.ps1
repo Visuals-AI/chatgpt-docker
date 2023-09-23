@@ -32,6 +32,7 @@ function deploy_image([string]$image_name) {
 Write-Host "Login to docker hub ..."
 docker login
 $image_name = (Split-Path $pwd -leaf)
+docker tag chatgpt-docker_web-chatgpt:latest ${image_name}:latest
 deploy_image -image_name ${image_name}
 
 Write-Host "finish ."

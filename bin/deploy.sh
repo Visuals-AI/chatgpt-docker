@@ -35,6 +35,7 @@ function deploy_image {
 echo "Login to docker hub ..."
 docker login
 image_name=`echo ${PWD##*/}`
+docker tag chatgpt-docker_web-chatgpt:latest ${image_name}:latest
 deploy_image ${image_name}
 
 docker image ls | grep "${image_name}"
