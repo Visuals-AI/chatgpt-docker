@@ -8,5 +8,4 @@
 echo "build image ..."
 docker-compose build
 
-docker image ls | grep "${IMAGE_NAME}"
 echo "finish ."
