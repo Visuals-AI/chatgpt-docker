@@ -61,7 +61,7 @@ function Set-Dns {
 
   $dns_file = "C:\Windows\System32\drivers\etc\hosts"
   if (Select-String -Path $dns_file -Pattern $DOMAIN) {
-    $from_reg = "^[0-9.]* ${DOMAIN}$"
+    $from_reg = "^[0-9.]* ${DOMAIN}"
     $to_str = "${INTER_IP} ${DOMAIN}"
     (Get-Content -Path $dns_file) -replace $from_reg, $to_str | Set-Content -Path $dns_file
     if (-not $?) {

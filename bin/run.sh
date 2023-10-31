@@ -77,7 +77,7 @@ function set_dns {
   inter_ip=$2
   
   if [ `grep -c "${domain}" ${DNS_FILE}` -ne '0' ]; then
-      FROM_REG="^[0-9.]* ${domain}$"
+      FROM_REG="^[0-9.]* ${domain}"
       TO_STR="${inter_ip} ${domain}"
       sed -i '' -E "s/${FROM_REG}/${TO_STR}/" ${DNS_FILE}
       if [ ! $? = 0 ]; then
