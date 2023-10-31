@@ -32,10 +32,10 @@ function deploy_image([string]$image_name) {
 Write-Host "Login to docker hub ..."
 docker login
 
-docker tag chatgpt-docker_web-chatgpt:latest chatgpt-web-docker:latest
+docker tag chatgpt-docker-web-chatgpt:latest chatgpt-web-docker:latest
 deploy_image -image_name "chatgpt-web-docker"
 
-docker tag chatgpt-docker_web-nginx:latest chatgpt-nginx-docker:latest
+docker tag chatgpt-docker-web-nginx:latest chatgpt-nginx-docker:latest
 deploy_image -image_name "chatgpt-nginx-docker"
 
 Write-Host "finish ."
