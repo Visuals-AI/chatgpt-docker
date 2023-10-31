@@ -45,9 +45,12 @@
 
 1. 安装依赖： `python3 -m pip install -r py/requirements.txt`
 2. 构建镜像： `bin/build.sh`
-3. 生成 BasicAuth： `python py/gen_basicauth.py -u "chatgpt" -p "TPGtahc#654321"`
+3. 生成 Nginx BasicAuth： `python py/gen_basicauth.py -u "chatgpt" -p "TPGtahc#654321"`
 3. 运行容器： `bin/run.sh|ps1 -k "${OPENAI_API_KEY}"`
 4. 访问服务： http://127.0.0.1:7080 （默认账密: `chatgpt / TPGtahc#654321`）
+
+> Nginx 支持多个 BasicAuth，可以重复执行 `python py/gen_basicauth.py` 命令得到帐密后，把他们复制到 .basicauth 中即可（一行一个帐密）
+
 
 更多运行参数：
 
@@ -61,8 +64,6 @@
 | `-s ${SOCKS_PROXY_HOST}` | host.docker.internal | Socks5 代理服务，如果代理在宿主机上，需要使用 host.docker.internal 作为 IP |
 | `-r ${SOCKS_PROXY_PORT}` | 10089 | Socks5 代理服务端口 |
 | `-r ${HTTPS_PROXY}` | http://host.docker.internal:10088 | HTTP 代理服务，和 Socks5 二选一 |
-| `-u ${USERNAME}` | chatgpt | ChatGPT Web 登录账户（Nginx BasicAuth） |
-| `-p ${PASSWORD}` | `TPGtahc#654321` | ChatGPT Web 登录密码（Nginx BasicAuth） |
 
 
 ## 其他

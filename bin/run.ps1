@@ -85,8 +85,9 @@ function Set-Env {
   Write-Host "$INTER_IP $DOMAIN"
 }
 
+# 无法兼容多用户情况，不在这里设置帐密
+# python3 ./py/gen_basicauth.py -u "$USERNAME" -p "$PASSWORD"
 
-python3 ./py/gen_basicauth.py -u "$USERNAME" -p "$PASSWORD"
 Set-Dns -DOMAIN $DOMAIN -INTER_IP $INTER_IP
 Set-Env
 

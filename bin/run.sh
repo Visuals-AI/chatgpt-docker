@@ -102,8 +102,9 @@ function set_env {
   echo "HTTPS_PROXY=${HTTPS_PROXY}" >> ${ENV_FILE}
 }
 
+# 无法兼容多用户情况，不在这里设置帐密
+# python3 ./py/gen_basicauth.py -u "$USERNAME" -p "$PASSWORD"
 
-python3 ./py/gen_basicauth.py -u "$USERNAME" -p "$PASSWORD"
 set_dns $DOMAIN $INTER_IP
 set_env
 
