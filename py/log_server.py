@@ -4,6 +4,7 @@
 # 简易日志服务器，用于接收 ChatGPT 前端日志
 # --------------------------------------------
 
+import base64
 import argparse
 from color_log.clog import log
 from flask import Flask, request, jsonify
@@ -33,9 +34,15 @@ def main(args) :
 @APP.route('/tolog', methods=['POST'])
 def tolog():
     data = request.json
-    msg = data.get('message', '')
+    base64_msg = data.get('message', '')
+    msg = unbase64(base64_msg)
     log.info(msg)
     return jsonify({"status": "success"}), 200
+
+
+def unbase64(text) :
+    decoded_bytes = base64.b64decode(text)
+    return decoded_bytes.decode('utf-8')
 
 
 if __name__ == "__main__":

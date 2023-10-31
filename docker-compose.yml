@@ -34,9 +34,6 @@ services:
       SOCKS_PROXY_PORT: ${SOCKS_PROXY_PORT}
       # HTTPS 代理，可选，支持 http，https，socks5
       HTTPS_PROXY: ${HTTPS_PROXY}
-      NEED_LOCATION: "true"
-      LOG_SVC_HOST: 127.0.0.1
-      LOG_SVC_PROT: 5000
     networks:
       web-net:
         ipv4_address: 172.168.100.2
@@ -71,7 +68,7 @@ services:
       # HTTPS 协议，需要挂载有效的 HTTPS 证书
       - 7443:443
       # flask 日志服务器
-      - 5000:5000
+      # - 5000:5000
     networks:
       web-net:
         ipv4_address: 172.168.100.3
