@@ -36,6 +36,9 @@ RUN echo "deb https://nginx.org/packages/ubuntu/ bionic nginx" >> /etc/apt/sourc
 RUN apt-get update -y && \
     apt-get install -y curl rsyslog nginx apache2-utils openssh-server rsyslog
 
+# 安装 flask 日志服务器
+ADD ./py /app/py
+RUN python -m pip install -r /app/py/requirements.txt
 
 
 WORKDIR /
