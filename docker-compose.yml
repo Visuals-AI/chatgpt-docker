@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  web-chatgpt:
-    # image: expm02/chatgpt-docker:latest
+  chatgpt-web:
+    # image: expm02/chatgpt-web-docker:latest
     build:
       context: ./chatgpt-web
       dockerfile: ./Dockerfile
-    container_name: web-chatgpt
-    hostname: web-chatgpt
+    container_name: chatgpt-web
+    hostname: chatgpt-web
     # ports:
     #   - 127.0.0.1:3002:3002
     environment:
@@ -35,18 +35,18 @@ services:
       # HTTPS 代理，可选，支持 http，https，socks5
       HTTPS_PROXY: ${HTTPS_PROXY}
     networks:
-      web-net:
+      chatgpt-net:
         ipv4_address: 172.168.100.2
     restart: on-failure
 
 
-  web-nginx:
-    # image: expm02/web-nginx:latest
+  chatgpt-nginx:
+    # image: expm02/chatgpt-nginx-docker:latest
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: web-nginx
-    hostname: web-nginx
+    container_name: chatgpt-nginx
+    hostname: chatgpt-nginx
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
@@ -70,7 +70,7 @@ services:
       # flask 日志服务器
       # - 5000:5000
     networks:
-      web-net:
+      chatgpt-net:
         ipv4_address: 172.168.100.3
     extra_hosts:
       - "${DOMAIN}:${INTER_IP}"
@@ -78,7 +78,7 @@ services:
 
 
 networks:
-  web-net:
+  chatgpt-net:
     driver: bridge
     ipam:
       driver: default
