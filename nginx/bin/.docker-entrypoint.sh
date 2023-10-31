@@ -29,4 +29,7 @@ service rsyslog start
 # 启动 nginx
 nginx
 
+# 启动 flask 日志服务
+cd /app/py
+python log_server.py &
 

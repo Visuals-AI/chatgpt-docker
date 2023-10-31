@@ -1,3 +1,5 @@
 argparse>=1.4.0
 py-color-log>=1.0.4
 passlib>=1.7.4
+flask>=2.0.3
+flask-cors>=4.0.0

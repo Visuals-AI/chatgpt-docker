@@ -5,7 +5,6 @@
 # --------------------------------------------
 
 import argparse
-from color_log.clog import log
 from passlib.apache import HtpasswdFile
 
 BASICAUTH_FILEPATH = '.basicauth'

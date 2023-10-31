@@ -34,9 +34,12 @@ function deploy_image {
 
 echo "Login to docker hub ..."
 docker login
-image_name=`echo ${PWD##*/}`
-docker tag chatgpt-docker_web-chatgpt:latest ${image_name}:latest
-deploy_image ${image_name}
 
-docker image ls | grep "${image_name}"
+docker tag chatgpt-docker_web-chatgpt:latest chatgpt-web-docker:latest
+deploy_image "chatgpt-web-docker"
+
+docker tag chatgpt-docker_web-nginx:latest chatgpt-nginx-docker:latest
+deploy_image "chatgpt-nginx-docker"
+
+docker images | grep chatgpt
 echo "finish ."
