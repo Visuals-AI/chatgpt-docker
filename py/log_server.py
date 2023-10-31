@@ -31,7 +31,7 @@ def main(args) :
 
 
 
-@APP.route('/tolog', methods=['POST'])
+@APP.route('/heartbeat', methods=['POST'])
 def tolog():
     data = request.json
     base64_msg = data.get('message', '')
