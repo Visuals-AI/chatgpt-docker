@@ -35,10 +35,10 @@ function deploy_image {
 echo "Login to docker hub ..."
 docker login
 
-docker tag chatgpt-docker_web-chatgpt:latest chatgpt-web-docker:latest
+docker tag chatgpt-docker_chatgpt-web:latest chatgpt-web-docker:latest
 deploy_image "chatgpt-web-docker"
 
-docker tag chatgpt-docker_web-nginx:latest chatgpt-nginx-docker:latest
+docker tag chatgpt-docker_chatgpt-nginx:latest chatgpt-nginx-docker:latest
 deploy_image "chatgpt-nginx-docker"
 
 docker images | grep chatgpt
