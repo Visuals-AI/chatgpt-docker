@@ -2,10 +2,10 @@ version: '3'
 
 services:
   chatgpt-web:
-    # image: expm02/chatgpt-web-docker:latest
-    build:
-      context: ./chatgpt-web
-      dockerfile: ./Dockerfile
+    image: expm02/chatgpt-web-docker:latest
+    # build:
+    #   context: ./chatgpt-web
+    #   dockerfile: ./Dockerfile
     container_name: chatgpt-web
     hostname: chatgpt-web
     ports:
@@ -43,10 +43,10 @@ services:
 
 
   chatgpt-nginx:
-    # image: expm02/chatgpt-nginx-docker:latest
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+    image: expm02/chatgpt-nginx-docker:latest
+    # build:
+    #   context: .
+    #   dockerfile: ./Dockerfile
     container_name: chatgpt-nginx
     hostname: chatgpt-nginx
     environment:
