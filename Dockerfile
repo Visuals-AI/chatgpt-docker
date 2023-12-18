@@ -25,13 +25,6 @@ RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> /root/.bashrc &
     echo "export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib" >> /root/.bashrc && \
     echo "export PATH=${JAVA_HOME}/bin:${PATH}" >> /root/.bashrc
 
-
-# 使用 nginx 最新的源
-RUN echo "deb https://nginx.org/packages/ubuntu/ bionic nginx" >> /etc/apt/sources.list && \
-    echo "deb-src https://nginx.org/packages/ubuntu/ bionic nginx" >> /etc/apt/sources.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ABF5BD827BD9BF62
-
-    
 # 安装系统必要工具
 RUN apt-get update -y && \
     apt-get install -y curl rsyslog nginx apache2-utils openssh-server rsyslog

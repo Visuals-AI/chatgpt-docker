@@ -8,8 +8,8 @@ services:
       dockerfile: ./Dockerfile
     container_name: chatgpt-web
     hostname: chatgpt-web
-    # ports:
-    #   - 127.0.0.1:3002:3002
+    ports:
+      - 127.0.0.1:3002:3002
     environment:
       # 二选一
       OPENAI_API_KEY: ${OPENAI_API_KEY}
@@ -34,6 +34,8 @@ services:
       SOCKS_PROXY_PORT: ${SOCKS_PROXY_PORT}
       # HTTPS 代理，可选，支持 http，https，socks5
       HTTPS_PROXY: ${HTTPS_PROXY}
+      # 最大缓存的聊天上下文记录数，默认值 0 表示不限制。如果是 20，说明只保留最近的 10 问 10 答。
+      MAX_HISTORT: ${MAX_HISTORT}
     networks:
       chatgpt-net:
         ipv4_address: 172.168.100.2

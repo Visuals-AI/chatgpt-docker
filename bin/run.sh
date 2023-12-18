@@ -11,7 +11,8 @@
 #           [-m ${OPENAI_MODEL}]        # ChatGPT Model: gpt-4, gpt-4-0314, gpt-4-0613, gpt-4-32k, gpt-4-32k-0314, gpt-4-32k-0613, gpt-3.5-turbo-16k, gpt-3.5-turbo-16k-0613, gpt-3.5-turbo, gpt-3.5-turbo-0301, gpt-3.5-turbo-0613, text-davinci-003, text-davinci-002, code-davinci-002
 #           [-s ${SOCKS_PROXY_HOST}]    # Socks5 代理服务，和 HTTP 二选一，格式形如 host.docker.internal
 #           [-r ${SOCKS_PROXY_PORT}]    # Socks5 代理服务端口
-#           [-h ${HTTPS_PROXY}]         # HTTP 代理服务，和 Socks5 二选一，格式形如 http://host.docker.internal:10088
+#           [-o ${HTTPS_PROXY}]         # HTTP 代理服务，和 Socks5 二选一，格式形如 http://host.docker.internal:10088
+#           [-z ${MAX_HISTORT}]         # 最大缓存的聊天上下文记录数，默认值 0 表示不限制。如果是 20，说明只保留最近的 10 问 10 答。
 #------------------------------------------------
 # 注： host.docker.internal 是 docker 内访问宿主机上的服务的固定地址
 #------------------------------------------------
@@ -26,9 +27,10 @@ OPENAI_MODEL="gpt-3.5-turbo"
 SOCKS_PROXY_HOST=""
 SOCKS_PROXY_PORT=""
 HTTPS_PROXY=""
+MAX_HISTORT="0"
 
 
-set -- `getopt t:d:i:u:p:k:m:s:r:h: "$@"`
+set -- `getopt t:d:i:u:p:k:m:s:r:o:z: "$@"`
 while [ -n "$1" ]
 do
   case "$1" in
@@ -50,7 +52,9 @@ do
         shift ;;
     -r) SOCKS_PROXY_PORT="$2"
         shift ;;
-    -h) HTTPS_PROXY="$2"
+    -o) HTTPS_PROXY="$2"
+        shift ;;
+    -z) MAX_HISTORT="$2"
         shift ;;
   esac
   shift
@@ -100,6 +104,7 @@ function set_env {
   echo "SOCKS_PROXY_HOST=${SOCKS_PROXY_HOST}" >> ${ENV_FILE}
   echo "SOCKS_PROXY_PORT=${SOCKS_PROXY_PORT}" >> ${ENV_FILE}
   echo "HTTPS_PROXY=${HTTPS_PROXY}" >> ${ENV_FILE}
+  echo "MAX_HISTORT=${MAX_HISTORT}" >> ${ENV_FILE}
 }
 
 # 无法兼容多用户情况，不在这里设置帐密
